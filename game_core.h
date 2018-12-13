@@ -1,11 +1,3 @@
-/******************************************************************************
-     * File: game_core.h
-     * Description: The file contains Game_core class, who rules all the game =)
-     * Created: 29.03.2018
-     * Author: Gibshman Polina
-     * Email: polina_gibshman@inbox.ru
-******************************************************************************/
-
 #ifndef GAME_CORE_H
 #define GAME_CORE_H
 

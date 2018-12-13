@@ -1,11 +1,3 @@
-/******************************************************************************
-     * File: game_core.cpp
-     * Description: The file contains the core of the game and it's realization
-     * Created: 29.03.2018
-     * Author: Gibshman Polina
-     * Email: polina_gibshman@inbox.ru
-******************************************************************************/
-
 #include <math.h>
 #include <QVector2D>
 #include <QString>
