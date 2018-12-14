@@ -195,6 +195,15 @@ void Widget::paintEvent(QPaintEvent *ev)
 void Widget::timerEvent(QTimerEvent *ev)
 {
     game_core.iterate();
+    if(game_core.is_game_started())
+    {
+        //Рассылка информации о происходящем на сервере
+        QString info = game_core.collect_info_for_client();
+        foreach(int i,SClients.keys())
+        {
+            SClients[i]->write(info.toUtf8());
+        }
+    }
     update();
 }
 

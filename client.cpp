@@ -60,6 +60,11 @@ void Client::createRequest()
 void Client::readTcpData()
 {
     //cs.appendInfo("We have data!");
+    QTcpSocket* clientSocket = (QTcpSocket*)sender();
+    int idusersocs=clientSocket->socketDescriptor();
+    QString request = clientSocket->readAll();
+
+    ui->textBrowser->append(request);
 }
 
 void Client::connection_lost()
@@ -164,7 +169,7 @@ void Client::on_connectButton_clicked()
         QMessageBox::information(0, "Error", "Connection failed");
     }
 
-    //connect( &tcpSocket, SIGNAL(readyRead()), SLOT(readTcpData()));
+    connect( &tcpSocket, SIGNAL(readyRead()), SLOT(readTcpData()));
 
     //  Общение с сервером
     QString request = "[need_ticket] ";

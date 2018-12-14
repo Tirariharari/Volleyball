@@ -63,5 +63,6 @@ QString Game_core::collect_info_for_client()
     request += buf.sprintf("%3.2f ", user2.y);
     request += buf.sprintf("%3.2f ", ball.x);
     request += buf.sprintf("%3.2f ", ball.y);
+    request += "*";
     return  request;
 }
