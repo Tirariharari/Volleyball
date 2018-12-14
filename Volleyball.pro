@@ -39,7 +39,8 @@ HEADERS += \
     game_core.h \
     settings.h \
     blob.h \
-    ball.h
+    ball.h \
+    client_graphics.h
 
 FORMS += \
     widget.ui \

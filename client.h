@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QTcpSocket>
 
+#include "client_graphics.h"
+
 namespace Ui {
 class Client;
 }
@@ -32,7 +34,7 @@ private slots:
 
 private:
     Ui::Client *ui;
-
+    ClientGraphics cg;
 };
 
 #endif // CLIENT_H

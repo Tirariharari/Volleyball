@@ -28,7 +28,7 @@ void Client::timerEvent(QTimerEvent *)
         tcpSocket.write(movement_report.toStdString().c_str());
     else
     {
-        if (connected && movement_report != "[myship] *")
+        if (connected && movement_report != "[user] *")
         {
             connected = false;
             connection_lost();
@@ -59,18 +59,24 @@ void Client::createRequest()
 
 void Client::readTcpData()
 {
-    //cs.appendInfo("We have data!");
     QTcpSocket* clientSocket = (QTcpSocket*)sender();
     int idusersocs=clientSocket->socketDescriptor();
     QString request = clientSocket->readAll();
 
-    ui->textBrowser->append(request);
+    request = request.section("*", 0, 0);
+    //ui->textBrowser->append(request);
+    cg.first_player_xy[0] = request.section(" ", 0, 0).toFloat();
+    cg.first_player_xy[1] = request.section(" ", 1, 1).toFloat();
+    cg.second_player_xy[0] = request.section(" ", 2, 2).toFloat();
+    cg.second_player_xy[1] = request.section(" ", 3, 3).toFloat();
+    cg.ball_xy[0] = request.section(" ", 4, 4).toFloat();
+    cg.ball_xy[1] = request.section(" ", 5, 5).toFloat();
+    //ui->textBrowser->append(QString::number(cg.first_player_xy[1]));
 }
 
-void Client::connection_lost()
+void Client::connection_lost()                          /// WTF
 {
-    //cs.appendInfo("Connection lost!");
-    //cs.show();
+    QMessageBox::information(0, "Error", "Connection lost");
 }
 
 void Client::keyPressEvent(QKeyEvent *event) // lf rt up dw // left right up down
