@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>276</width>
-    <height>282</height>
+    <width>1000</width>
+    <height>500</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>500</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Client</string>
@@ -34,7 +46,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="3">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -46,9 +58,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="0" column="2">
-    <widget class="QTextBrowser" name="textBrowser"/>
    </item>
   </layout>
  </widget>

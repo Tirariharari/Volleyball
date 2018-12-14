@@ -146,52 +146,6 @@ void Widget::slotDisconnetClient()
     }
 }
 
-/*
-void Widget::paintEvent(QPaintEvent *ev)
-{
-    QVector2D fieldCenter;
-    fieldCenter.setX((this->width()-256)/2);
-    fieldCenter.setY(this->height()/2);
-
-    int shipSize = 10;
-
-    QPainter p(this);
-    p.setPen(Qt::black);
-    p.setBrush(Qt::black);
-    p.drawEllipse(fieldCenter.x()-BORDER, fieldCenter.y()-BORDER, BORDER*2, BORDER*2);
-    p.setBrush(Qt::yellow);
-    p.drawEllipse(fieldCenter.x()-shipSize/2, fieldCenter.y()-shipSize/2, shipSize, shipSize);
-
-    foreach (int key, game_core.Ships.keys()) {
-        shipSize = game_core.Ships[key].get_size();
-        p.setBrush(Qt::white);
-        p.drawEllipse(fieldCenter.x()-shipSize/2 + game_core.Ships[key].get_pos_x(),
-                      fieldCenter.y()-shipSize/2 + game_core.Ships[key].get_pos_y(), shipSize, shipSize);
-        p.setBrush(Qt::red);
-
-        QVector2D gof;
-        gof.setX(cos(game_core.Ships[key].get_rotation()/180*M_PI)*(-shipSize));
-        gof.setY(sin(game_core.Ships[key].get_rotation()/180*M_PI)*(shipSize));
-        gof*=(-1);
-        p.drawEllipse(fieldCenter.x()-shipSize/8 + game_core.Ships[key].get_pos_x() + gof.x(),
-                      fieldCenter.y()-shipSize/8 + game_core.Ships[key].get_pos_y() + gof.y(),
-                      shipSize/4, shipSize/4);
-
-    }
-
-    shipSize = 4;
-    p.setPen(Qt::black);
-    p.setBrush(Qt::red);
-
-    QList<Bullet>::iterator it = game_core.Bullets.begin();
-    for ( ; it != game_core.Bullets.end(); ++it ) {
-        Bullet& bull = *it;
-        p.drawEllipse(fieldCenter.x()-shipSize/2 + bull.get_pos_x(),
-                      fieldCenter.y()-shipSize/2 + bull.get_pos_y(), shipSize, shipSize);
-    }
-}
-*/
-
 void Widget::timerEvent(QTimerEvent *ev)
 {
     game_core.iterate();

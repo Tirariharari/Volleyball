@@ -31,6 +31,7 @@ private slots:
     void keyReleaseEvent(QKeyEvent *event);
     void createRequest();
     void on_connectButton_clicked();
+    void paintEvent(QPaintEvent *ev);
 
 private:
     Ui::Client *ui;

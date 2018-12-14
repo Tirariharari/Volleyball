@@ -1,8 +1,10 @@
 #include "client.h"
 #include "ui_client.h"
 #include "client_functions.cpp"
+#include "settings.h"
 
 #include <QKeyEvent>
+#include <QPainter>
 #include <QMessageBox>
 
 Client::Client(QWidget *parent) :
@@ -64,6 +66,7 @@ void Client::readTcpData()
     QString request = clientSocket->readAll();
 
     request = request.section("*", 0, 0);
+    request = request.section("[s] ", 1, 1);
     //ui->textBrowser->append(request);
     cg.first_player_xy[0] = request.section(" ", 0, 0).toFloat();
     cg.first_player_xy[1] = request.section(" ", 1, 1).toFloat();
@@ -71,15 +74,16 @@ void Client::readTcpData()
     cg.second_player_xy[1] = request.section(" ", 3, 3).toFloat();
     cg.ball_xy[0] = request.section(" ", 4, 4).toFloat();
     cg.ball_xy[1] = request.section(" ", 5, 5).toFloat();
-    //ui->textBrowser->append(QString::number(cg.first_player_xy[1]));
+    //ui->textBrowser->append(QString::number(cg.second_player_xy[1]));
+    update();
 }
 
-void Client::connection_lost()                          /// WTF
+void Client::connection_lost()
 {
     QMessageBox::information(0, "Error", "Connection lost");
 }
 
-void Client::keyPressEvent(QKeyEvent *event) // lf rt up dw // left right up down
+void Client::keyPressEvent(QKeyEvent *event)
 {
     //  Считывание нажатий пользователя
 
@@ -116,7 +120,7 @@ void Client::keyPressEvent(QKeyEvent *event) // lf rt up dw // left right up dow
     }
 }
 
-void Client::keyReleaseEvent(QKeyEvent *event) // lf rt up dw // left right up down
+void Client::keyReleaseEvent(QKeyEvent *event)
 {
     //  Считывание "отжатий" пользователя
 
@@ -182,3 +186,73 @@ void Client::on_connectButton_clicked()
     tcpSocket.write(request.toStdString().c_str());
 }
 
+void Client::paintEvent(QPaintEvent *ev)
+{
+    QPainter p(this);
+    p.setPen(Qt::black);
+    p.setBrush(Qt::black);
+
+    // Поле
+    QPointF fieldCenter;
+    fieldCenter.setX(this->width()/2);
+    fieldCenter.setY(this->height()/2);
+    QPointF bottomCenter;
+    bottomCenter.setX(this->width()/2);
+    bottomCenter.setY(this->height());
+
+    p.drawLine(fieldCenter, bottomCenter);
+
+    // МБ с радиусом что-то не то
+    // Игроки
+    p.drawEllipse(cg.first_player_xy[0], this->height()-cg.first_player_xy[1]-BLOB_SIZE/4, BLOB_SIZE/2, BLOB_SIZE/2);
+    p.drawEllipse(cg.second_player_xy[0], this->height()-cg.second_player_xy[1]-BLOB_SIZE/4, BLOB_SIZE/2, BLOB_SIZE/2);
+
+    // Мяч
+     p.drawEllipse(cg.ball_xy[0], this->height()-cg.ball_xy[1]-BALL_SIZE/4, BALL_SIZE/2, BALL_SIZE/2);
+}
+
+/*
+void Widget::paintEvent(QPaintEvent *ev)
+{
+    QVector2D fieldCenter;
+    fieldCenter.setX((this->width()-256)/2);
+    fieldCenter.setY(this->height()/2);
+
+    int shipSize = 10;
+
+    QPainter p(this);
+    p.setPen(Qt::black);
+    p.setBrush(Qt::black);
+    p.drawEllipse(fieldCenter.x()-BORDER, fieldCenter.y()-BORDER, BORDER*2, BORDER*2);
+    p.setBrush(Qt::yellow);
+    p.drawEllipse(fieldCenter.x()-shipSize/2, fieldCenter.y()-shipSize/2, shipSize, shipSize);
+
+    foreach (int key, game_core.Ships.keys()) {
+        shipSize = game_core.Ships[key].get_size();
+        p.setBrush(Qt::white);
+        p.drawEllipse(fieldCenter.x()-shipSize/2 + game_core.Ships[key].get_pos_x(),
+                      fieldCenter.y()-shipSize/2 + game_core.Ships[key].get_pos_y(), shipSize, shipSize);
+        p.setBrush(Qt::red);
+
+        QVector2D gof;
+        gof.setX(cos(game_core.Ships[key].get_rotation()/180*M_PI)*(-shipSize));
+        gof.setY(sin(game_core.Ships[key].get_rotation()/180*M_PI)*(shipSize));
+        gof*=(-1);
+        p.drawEllipse(fieldCenter.x()-shipSize/8 + game_core.Ships[key].get_pos_x() + gof.x(),
+                      fieldCenter.y()-shipSize/8 + game_core.Ships[key].get_pos_y() + gof.y(),
+                      shipSize/4, shipSize/4);
+
+    }
+
+    shipSize = 4;
+    p.setPen(Qt::black);
+    p.setBrush(Qt::red);
+
+    QList<Bullet>::iterator it = game_core.Bullets.begin();
+    for ( ; it != game_core.Bullets.end(); ++it ) {
+        Bullet& bull = *it;
+        p.drawEllipse(fieldCenter.x()-shipSize/2 + bull.get_pos_x(),
+                      fieldCenter.y()-shipSize/2 + bull.get_pos_y(), shipSize, shipSize);
+    }
+}
+*/
