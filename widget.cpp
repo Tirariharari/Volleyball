@@ -23,7 +23,7 @@ Widget::~Widget()
     delete ui;
 }
 
-//  Настройка сервера. Вроде пашет
+//  Настройка сервера
 void Widget::on_startServer_pushButton_clicked()
 {
     if (server_status)
@@ -75,11 +75,13 @@ void Widget::newuser()
         connect(SClients[idusersocs],SIGNAL(readyRead()),this, SLOT(slotReadClient()));
         connect(SClients[idusersocs],SIGNAL(disconnected()),this, SLOT(slotDisconnetClient()));
 
-        //  Вывод информации о клиенте
+        //  Вывод информации о количестве клиентов
         ui->info_textBrowser->append("Clients: " + QString::number(SClients.keys().size()));
+
+        game_core.new_user(idusersocs);
     }
     else{
-        //  Отправка ошибки клиенту???
+        //  Отправка ошибки клиенту
     }
 }
 
@@ -105,12 +107,17 @@ void Widget::on_clearInfo_pushButton_clicked()
     ui->info_textBrowser->clear();
 }
 
-//  Точно ли нам нужна эта кнопка?
 void Widget::on_clients_pushButton_clicked()
 {
     ui->info_textBrowser->append( "Clients : " + QString::number( SClients.size() ) );
+
+    foreach(int i,SClients.keys())
+    {
+        ui->info_textBrowser->append(""+ QString::number(i));
+    }
+
+    ui->info_textBrowser->append(game_core.collect_info_for_client());
     //  Вывод ip пользователей
-    //ui->info_textBrowser->append(game_core.get_info_to_client());
 }
 
 void Widget::slotReadClient()
@@ -118,6 +125,8 @@ void Widget::slotReadClient()
     QTcpSocket* clientSocket = (QTcpSocket*)sender();
     int idusersocs=clientSocket->socketDescriptor();
     QString request = clientSocket->readAll();
+
+    ui->info_textBrowser->append(QString::number(idusersocs) +" "+ request);
 
     //  Обработка запроса пользователя
 }

@@ -5,6 +5,7 @@
 #include "game_core.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "settings.h"
 
 Game_core::Game_core()
 {
@@ -23,8 +24,17 @@ bool Game_core::new_user(int id)
 {
     if (game_started)
         return false;
-    //  Тут была выдача кораблей
-    return true;
+
+    if(!user1.idusersoc)
+    {
+        user1.init(true , id);
+        return true;
+    }else if(!user2.idusersoc)
+    {
+        user2.init(false, id);
+        return true;
+    }
+    return false;
 }
 
 bool Game_core::start_game()
@@ -43,53 +53,15 @@ bool Game_core::stop_game()
     return true;  //  Game was successfully stoped
 }
 
-
-///  Дима, я не знаю, что ты пытался сказать этими комментариями, но они нечитабельны
-///  Более того, get info нельзя. Можно только send или на худой конец give.
-///  А get - это получать.
-
-//Ship: Nickname number model x y rotation n/
-//Bullet: x:y:owner n/
-
-//  [server]3n/
-//  Nick 1 1 1.73758 10.73728 278n/
-//  Nost 2 5 2 5.48395 10n/
-//  Rog 3 2 4.122 7.322 176n/
-//  3.666:3.543:1 2.184:108.638:2n/
-
-/*
-QString Game_core::get_info_to_client()
+QString Game_core::collect_info_for_client()
 {
-    QString report = "[server]";
-    report += QString::number(Ships.size());
-    report += "\n";
-    foreach (Ship i, Ships)
-    {
-        report += i.get_nickname();
-        report += " ";
-        report += QString::number(i.get_ship_number());
-        report += " ";
-        report += QString::number(i.get_model());
-        report += " ";
-        report += QString::number(i.get_pos_x());
-        report += " ";
-        report += QString::number(i.get_pos_y());
-        report += " ";
-        report += QString::number((int)i.get_rotation());
-        report += "\n";
-    }
-
-    foreach (Bullet i, Bullets)
-    {
-        report += QString::number(i.get_pos_x());
-        report += ":";
-        report += QString::number(i.get_pos_y());
-        report += ":";
-        report += QString::number(i.owner_number);
-        report += " ";
-    }
-    report += "\n";
-
-    return report;
+    QString request = "[s] ";
+    QString buf = "";
+    request += buf.sprintf("%3.2f ", user1.x);
+    request += buf.sprintf("%3.2f ", user1.y);
+    request += buf.sprintf("%3.2f ", user2.x);
+    request += buf.sprintf("%3.2f ", user2.y);
+    request += buf.sprintf("%3.2f ", ball.x);
+    request += buf.sprintf("%3.2f ", ball.y);
+    return  request;
 }
-*/

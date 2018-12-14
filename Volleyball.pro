@@ -29,12 +29,17 @@ SOURCES += \
     widget.cpp \
     client.cpp \
     client_functions.cpp \
-    game_core.cpp
+    game_core.cpp \
+    blob.cpp \
+    ball.cpp
 
 HEADERS += \
     widget.h \
     client.h \
-    game_core.h
+    game_core.h \
+    settings.h \
+    blob.h \
+    ball.h
 
 FORMS += \
     widget.ui \

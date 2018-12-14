@@ -13,9 +13,6 @@ Client::Client(QWidget *parent) :
     connected = false;
 
     startTimer(10);
-
-    //connect(&cs, SIGNAL(connect_button_clicked()), this,  SLOT(on_connect_pushButton_clicked()));
-    //connect(&cs, SIGNAL(disconnect_button_clicked()), this,  SLOT(on_disconnect_pushButton_clicked()));
 }
 
 Client::~Client()
@@ -27,7 +24,7 @@ void Client::timerEvent(QTimerEvent *)
 {
     createRequest();
 
-    /*if (tcpSocket.waitForConnected(10) && movement_report != "[myship] *")
+    if (tcpSocket.waitForConnected(10) && movement_report != "[user] *")
         tcpSocket.write(movement_report.toStdString().c_str());
     else
     {
@@ -36,13 +33,13 @@ void Client::timerEvent(QTimerEvent *)
             connected = false;
             connection_lost();
         }
-    }*/
+    }
 }
 
 void Client::createRequest()
 {
     //  Отчёт серверу о действиях пользователя
-    /*movement_report = "[myship] ";
+    movement_report = "[user] ";
 
     if(keys_pressed[0])
         movement_report += "lf ";
@@ -56,60 +53,9 @@ void Client::createRequest()
     if(keys_pressed[3])
         movement_report += "dw ";
 
-    if(keys_pressed[4])
-        movement_report += "shot ";
-
-
     movement_report += "*";
-    */
+
 }
-
-/*
-void Client::on_connect_pushButton_clicked()
-{
-    if (connected)
-    {
-        cs.appendInfo("Already connected");
-        return;
-    }
-
-    QString ipText, portText;
-    parsing_ip(cs.getIp(), ipText, portText);
-    if(ipText == "Err")
-    {
-        cs.appendInfo("Bad ip =(");
-        return;
-    }
-    tcpSocket.connectToHost(ipText, portText.toInt());
-    if( tcpSocket.waitForConnected(100)) {
-
-            connected = true;
-            cs.appendInfo("Connected");
-            cs.hide();
-    }else{
-        cs.appendInfo("Connection failed");
-    }
-
-    connect( &tcpSocket, SIGNAL(readyRead()), SLOT(readTcpData()));
-
-    QString request = "[username] ";
-    request += cs.getNickname();
-    request += " ";
-    tcpSocket.write(request.toStdString().c_str());
-    request = "[i_need_a_ship] ";
-    tcpSocket.write(request.toStdString().c_str());
-    request = "[ship_model] " + cs.get_model().section(" ",0,0) + " #";
-    //qDebug() << cs.get_model();
-    tcpSocket.write(request.toStdString().c_str());
-}
-
-void Client::on_disconnect_pushButton_clicked()
-{
-    tcpSocket.disconnectFromHost();
-    connected = false;
-    //cs.appendInfo("Disconnected");
-}
-*/
 
 void Client::readTcpData()
 {
@@ -125,7 +71,7 @@ void Client::connection_lost()
 void Client::keyPressEvent(QKeyEvent *event) // lf rt up dw // left right up down
 {
     //  Считывание нажатий пользователя
-/*
+
     switch (event->key())
     {
 
@@ -157,13 +103,12 @@ void Client::keyPressEvent(QKeyEvent *event) // lf rt up dw // left right up dow
     default:
         break;
     }
-*/
 }
 
 void Client::keyReleaseEvent(QKeyEvent *event) // lf rt up dw // left right up down
 {
     //  Считывание "отжатий" пользователя
-/*
+
     switch (event->key())
     {
 
@@ -195,7 +140,6 @@ void Client::keyReleaseEvent(QKeyEvent *event) // lf rt up dw // left right up d
     default:
         break;
     }
-*/
 }
 
 void Client::on_connectButton_clicked()
@@ -215,26 +159,15 @@ void Client::on_connectButton_clicked()
     if( tcpSocket.waitForConnected(100)) {
 
             connected = true;
-            QMessageBox::information(0, "Info", "Connected to server");
-            //  ! - появление картинки
+            //QMessageBox::information(0, "Info", "Connected to server");
     }else{
         QMessageBox::information(0, "Error", "Connection failed");
     }
 
     //connect( &tcpSocket, SIGNAL(readyRead()), SLOT(readTcpData()));
 
-/*  Общение с сервером
-
-
-    QString request = "[username] ";
-    request += cs.getNickname();
-    request += " ";
+    //  Общение с сервером
+    QString request = "[need_ticket] ";
     tcpSocket.write(request.toStdString().c_str());
-    request = "[i_need_a_ship] ";
-    tcpSocket.write(request.toStdString().c_str());
-    request = "[ship_model] " + cs.get_model().section(" ",0,0) + " #";
-    //qDebug() << cs.get_model();
-    tcpSocket.write(request.toStdString().c_str());
-*/
 }
 

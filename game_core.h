@@ -6,11 +6,18 @@
 #include <QList>
 #include <QVector2D>
 
+#include "blob.h"
+#include "ball.h"
+
 class Game_core
 {
     bool game_started;
 
 public:
+    Blob user1;
+    Blob user2;
+    Ball ball;
+
     Game_core();
 
     void iterate();
@@ -20,7 +27,7 @@ public:
     bool stop_game();
     bool new_user(int);
 
-    QString get_info_to_client();
+    QString collect_info_for_client();
 };
 
 #endif // GAME_CORE_H

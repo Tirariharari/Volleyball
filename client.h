@@ -20,7 +20,7 @@ public:
     bool connected;
 
     QString movement_report;
-    //bool keys_pressed[10] = {0,0,0,0,0,0,0,0,0,0};
+    bool keys_pressed[10] = {0,0,0,0,0,0,0,0,0,0};
 
 private slots:
     void readTcpData();

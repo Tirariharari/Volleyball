@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
     Client c1;
     c1.show();
 
-    //Client c3;
-    //c3.show();
+    Client c3;
+    c3.show();
 
     return a.exec();
 }
