@@ -15,8 +15,13 @@ public:
     float dy;
     bool floating;
 
+    float minx;
+    float maxx;
+    float miny;
+    float maxy;
+
     Ball();
-    void reset(bool side);
+    void reset(float side); // 0-left 1-right 0.5-middle
 };
 
 #endif // BALL_H

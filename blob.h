@@ -10,6 +10,7 @@ class Blob
 {
 public:
     int idusersoc;
+    float dx;
     float x;
     float dy;
     float y;
@@ -20,6 +21,7 @@ public:
 
     Blob();
     void init(bool side, int _idusersoc);
+    void reset();
 };
 
 #endif // BLOB_H

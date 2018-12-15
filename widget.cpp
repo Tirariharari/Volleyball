@@ -1,11 +1,13 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include "settings.h"
 
 #include <QtNetwork>
 #include <QTcpSocket>
 #include <QDebug>
 #include <QTimerEvent>
 #include <QPainter>
+#include <QString.h>
 
 
 Widget::Widget(QWidget *parent) :
@@ -15,7 +17,7 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     server_status = false;
     users = 0;
-    startTimer(1);
+    startTimer(2);
 }
 
 Widget::~Widget()
@@ -128,7 +130,29 @@ void Widget::slotReadClient()
 
     ui->info_textBrowser->append(QString::number(idusersocs) +" "+ request);
 
+
+
     //  Обработка запроса пользователя
+    request = request.section("*", 0,0);
+    Blob * buf = NULL;
+    if(idusersocs == game_core.user1.idusersoc)
+        buf = &game_core.user1;
+    else if(idusersocs == game_core.user2.idusersoc)
+        buf = &game_core.user2;
+
+
+    if(buf){
+    if ( request.contains("lf"))  //  left
+        buf->dx = -BLOB_SPEED;
+    if ( request.contains("rt"))  // right
+        buf->dx = BLOB_SPEED;
+    if ( request.contains("up")){ //  up
+        if( buf->y < BLOB_SIZE/2+1)
+            buf->dy = BLOB_JUMP_HIGH;
+    }
+    }else{
+        ui->info_textBrowser->append("idusersoc err (restart game)");
+    }
 }
 
 void Widget::slotDisconnetClient()
@@ -169,8 +193,18 @@ void Widget::on_start_game_pushButton_clicked()
         ui->info_textBrowser->append("You should start the server first");
         return;
     }
-    if (!game_core.start_game())  //  <-Функция автоматически запускает игру
+    if(game_core.user1.idusersoc == 0 || game_core.user2.idusersoc == 0)
+    {
+        ui->info_textBrowser->append("Need 2 players");
+        return;
+    }
+    if (!game_core.start_game()){ //  <-Функция автоматически запускает игру
         ui->info_textBrowser->append("Impossible to start the game. Check if it is already started");
+        foreach(int i,SClients.keys())
+        {
+            game_core.new_user(i);
+        }
+    }
 }
 
 void Widget::on_stop_game_pushButton_clicked()
