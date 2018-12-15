@@ -25,7 +25,7 @@ public:
     void conection_lost() {}
     bool start_game();
     bool stop_game();
-    bool new_user(int);
+    bool new_user(int id);
 
     QString collect_info_for_client();
 };
