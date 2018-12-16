@@ -36,6 +36,10 @@ private slots:
 private:
     Ui::Client *ui;
     ClientGraphics cg;
+    QPixmap back;
+    QPixmap player_1;
+    QPixmap player_2;
+    QPixmap ball;
 };
 
 #endif // CLIENT_H

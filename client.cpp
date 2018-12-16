@@ -2,10 +2,15 @@
 #include "ui_client.h"
 #include "client_functions.cpp"
 #include "settings.h"
+#include "textures/back_texture.xpm"
+#include "textures/ball.xpm"
+#include "textures/player_1.xpm"
+#include "textures/player_2.xpm"
 
 #include <QKeyEvent>
 #include <QPainter>
 #include <QMessageBox>
+#include <QPixmap>
 
 Client::Client(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +20,18 @@ Client::Client(QWidget *parent) :
     connected = false;
 
     startTimer(10);
+
+    back = QPixmap (_back_texture);
+    back = back.scaled (FIELD_MAX_X, FIELD_MAX_Y);
+
+    player_1 = QPixmap (_player_1);
+    player_1 = player_1.scaled(BLOB_SIZE, BLOB_SIZE);
+
+    player_2 = QPixmap (_player_2);
+    player_2 = player_2.scaled(BLOB_SIZE, BLOB_SIZE);
+
+    ball = QPixmap(_ball);
+    ball = ball.scaled(BALL_SIZE, BALL_SIZE);
 }
 
 Client::~Client()
@@ -184,9 +201,17 @@ void Client::paintEvent(QPaintEvent *ev)
 {
     QPainter p(this);
     p.setPen(Qt::black);
-    p.setBrush(Qt::black);
+    p.setBrush(Qt::white);
 
     // Поле
+    p.drawPixmap(0, 0, back);
+
+    p.drawPolygon(QPolygon()<<QPoint(this->width()/2 - 5, height()/2)\
+                  <<QPoint(this->width()/2 + 5, height()/2)\
+                  <<QPoint(this->width()/2 - 5, this->height())\
+                  <<QPoint(this->width()/2 + 5, this->height()));
+
+    /*
     QPointF fieldCenter;
     fieldCenter.setX(this->width()/2);
     fieldCenter.setY(this->height()/2);
@@ -195,17 +220,12 @@ void Client::paintEvent(QPaintEvent *ev)
     bottomCenter.setY(this->height());
 
     p.drawLine(fieldCenter, bottomCenter);
+    */
 
     // Игроки
-    p.setPen(Qt::blue);
-    p.setBrush(Qt::blue);
-    p.drawEllipse(cg.first_player_xy[0]-BLOB_SIZE/2, this->height()-cg.first_player_xy[1]-BLOB_SIZE/2, BLOB_SIZE, BLOB_SIZE);
-    p.setPen(Qt::red);
-    p.setBrush(Qt::red);
-    p.drawEllipse(cg.second_player_xy[0]-BLOB_SIZE/2, this->height()-cg.second_player_xy[1]-BLOB_SIZE/2, BLOB_SIZE, BLOB_SIZE);
+    p.drawPixmap(cg.first_player_xy[0]-BLOB_SIZE/2, this->height()-cg.first_player_xy[1]-BLOB_SIZE/2, player_1);
+    p.drawPixmap(cg.second_player_xy[0]-BLOB_SIZE/2, this->height()-cg.second_player_xy[1]-BLOB_SIZE/2, player_2);
 
     // Мяч
-    p.setPen(Qt::green);
-    p.setBrush(Qt::green);
-    p.drawEllipse(cg.ball_xy[0]-BALL_SIZE/2, this->height()-cg.ball_xy[1]-BALL_SIZE/2, BALL_SIZE, BALL_SIZE);
+    p.drawPixmap(cg.ball_xy[0]-BALL_SIZE/2, this->height()-cg.ball_xy[1]-BALL_SIZE/2, ball);
 }

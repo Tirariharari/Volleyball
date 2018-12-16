@@ -2,6 +2,7 @@
 #define CLIENT_GRAPHICS_H
 
 #include "client.h"
+#include "settings.h"
 
 class Client;
 
@@ -11,12 +12,12 @@ class ClientGraphics{
     float ball_xy[2];
 public:
     ClientGraphics(){
-        first_player_xy[0] = 0;
-        first_player_xy[1] = 0;
-        second_player_xy[0] = 0;
-        second_player_xy[1] = 0;
-        ball_xy[0] = 0;
-        ball_xy[1] = 0;
+        first_player_xy[0] = FIELD_MAX_X/4;
+        first_player_xy[1] = BLOB_SIZE/2;
+        second_player_xy[0] = 3*FIELD_MAX_X/4;
+        second_player_xy[1] = BLOB_SIZE/2;
+        ball_xy[0] = FIELD_MAX_X/2;
+        ball_xy[1] = FIELD_MAX_Y/2 + BALL_SIZE/2;
     }
     friend Client;
 };
