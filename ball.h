@@ -21,7 +21,7 @@ public:
     float maxy;
 
     Ball();
-    void reset(float side); // 0-left 1-right 0.5-middle
+    void reset(int side); // 0-left 1-right 2-middle
 };
 
 #endif // BALL_H

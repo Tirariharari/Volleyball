@@ -89,8 +89,8 @@ void Game_core::iterate()
 
         if(ball.y < ball.miny)
         {
-            ball.y = ball.miny;
-            ball.dy *= -1;
+            //ball.y = ball.miny;
+            //ball.dy *= -1;
             if(ball.x < FIELD_MAX_X/2)
             {
                 ball.reset(0);
