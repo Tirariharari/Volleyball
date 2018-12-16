@@ -102,6 +102,7 @@ void Widget::on_stopServer_pushButton_clicked()
         ui->info_textBrowser->append(QString::fromUtf8("Server was stopped"));
         server_status=false;
     }
+    game_core.stop_game();
 }
 
 void Widget::on_clearInfo_pushButton_clicked()
