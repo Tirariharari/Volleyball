@@ -25,7 +25,7 @@ Ball::Ball()
     floating = true;
 }
 
-void Ball::reset(float side)
+void Ball::reset(int side)
 {
     if(side == 0)
     {
@@ -43,7 +43,7 @@ void Ball::reset(float side)
         dy = 0;
         floating = true;
     }
-    if(side == 0.5)
+    if(side == 2)
     {
         x = FIELD_MAX_X/2;
         y = FIELD_MAX_Y/2 + BALL_SIZE/2;

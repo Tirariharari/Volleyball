@@ -17,7 +17,7 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     server_status = false;
     users = 0;
-    startTimer(2);
+    startTimer(4);
 }
 
 Widget::~Widget()
