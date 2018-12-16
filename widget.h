@@ -36,7 +36,6 @@ private slots:
     void slotReadClient();
     void slotDisconnetClient();
 
-    //void paintEvent(QPaintEvent *ev);
     void timerEvent(QTimerEvent *ev);
 
 private:
@@ -49,7 +48,6 @@ private:
     QMap <int,QTcpSocket *> SClients;
 
     Game_core game_core;
-    //void parsing ();
 };
 
 #endif // WIDGET_H

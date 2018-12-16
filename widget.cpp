@@ -82,9 +82,6 @@ void Widget::newuser()
 
         game_core.new_user(idusersocs);
     }
-    else{
-        //  Отправка ошибки клиенту
-    }
 }
 
 //  Остановка сервера
@@ -114,13 +111,11 @@ void Widget::on_clients_pushButton_clicked()
 {
     ui->info_textBrowser->append( "Clients : " + QString::number( SClients.size() ) );
 
-    foreach(int i,SClients.keys())
-    {
+    foreach(int i,SClients.keys()){
         ui->info_textBrowser->append(""+ QString::number(i));
     }
 
     ui->info_textBrowser->append(game_core.collect_info_for_client());
-    //  Вывод ip пользователей
 }
 
 void Widget::slotReadClient()

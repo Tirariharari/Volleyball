@@ -13,7 +13,7 @@ void parsing_ip(QString ip, QString &serverIp, QString &serverPort)
 
         if((ip[i]).isNumber() || ip[i]=='.' || ip[i]==':')
         {
-            //
+            //  Everything is good
         }else
         {
             bad = 1;

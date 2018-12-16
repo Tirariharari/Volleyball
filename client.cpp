@@ -62,19 +62,16 @@ void Client::createRequest()
 void Client::readTcpData()
 {
     QTcpSocket* clientSocket = (QTcpSocket*)sender();
-    //int idusersocs=clientSocket->socketDescriptor();
     QString request = clientSocket->readAll();
 
     request = request.section("*", 0, 0);
     request = request.section("[s] ", 1, 1);
-    //ui->textBrowser->append(request);
     cg.first_player_xy[0] = request.section(" ", 0, 0).toFloat();
     cg.first_player_xy[1] = request.section(" ", 1, 1).toFloat();
     cg.second_player_xy[0] = request.section(" ", 2, 2).toFloat();
     cg.second_player_xy[1] = request.section(" ", 3, 3).toFloat();
     cg.ball_xy[0] = request.section(" ", 4, 4).toFloat();
     cg.ball_xy[1] = request.section(" ", 5, 5).toFloat();
-    //ui->textBrowser->append(QString::number(cg.second_player_xy[1]));
     update();
 }
 
@@ -86,7 +83,6 @@ void Client::connection_lost()
 void Client::keyPressEvent(QKeyEvent *event)
 {
     //  Считывание нажатий пользователя
-
     switch (event->key())
     {
 
@@ -123,7 +119,6 @@ void Client::keyPressEvent(QKeyEvent *event)
 void Client::keyReleaseEvent(QKeyEvent *event)
 {
     //  Считывание "отжатий" пользователя
-
     switch (event->key())
     {
 
@@ -174,7 +169,6 @@ void Client::on_connectButton_clicked()
     if( tcpSocket.waitForConnected(100)) {
 
             connected = true;
-            //QMessageBox::information(0, "Info", "Connected to server");
     }else{
         QMessageBox::information(0, "Error", "Connection failed");
     }

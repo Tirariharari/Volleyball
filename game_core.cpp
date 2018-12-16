@@ -2,9 +2,11 @@
 #include <QVector2D>
 #include <QString>
 #include <QMap>
-#include "game_core.h"
+
 #define _USE_MATH_DEFINES
 #include <math.h>
+
+#include "game_core.h"
 #include "settings.h"
 
 Game_core::Game_core()
@@ -65,8 +67,6 @@ void Game_core::iterate()
         if(bufl < BALL_SIZE/2+BLOB_SIZE/2)
         {
             ball.floating = false;
-            //ball.dx = bufx/bufl*POWER;
-            //ball.dy = bufy/bufl*POWER;
             ball.dx = POWER;
             ball.dy = POWER;
             ball.x = user1.x;
@@ -79,8 +79,6 @@ void Game_core::iterate()
         if(bufl < BALL_SIZE/2+BLOB_SIZE/2)
         {
             ball.floating = false;
-            //ball.dx = bufx/bufl*POWER;
-            //ball.dy = bufy/bufl*POWER;
             ball.dx = -POWER;
             ball.dy = POWER;
             ball.x = user2.x;
@@ -89,8 +87,6 @@ void Game_core::iterate()
 
         if(ball.y < ball.miny)
         {
-            ball.y = ball.miny;
-            ball.dy *= -1;
             if(ball.x < FIELD_MAX_X/2)
             {
                 ball.reset(0);

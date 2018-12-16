@@ -5,8 +5,6 @@
 
 class Client;
 
-
-// cg in Client's class
 class ClientGraphics{
     float first_player_xy[2];
     float second_player_xy[2];
