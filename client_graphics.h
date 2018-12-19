@@ -19,7 +19,7 @@ public:
         ball_xy[0] = FIELD_MAX_X/2;
         ball_xy[1] = FIELD_MAX_Y/2 + BALL_SIZE/2;
     }
-    friend Client;
+    friend class Client;
 };
 
 #endif // CLIENT_GRAPHICS_H
